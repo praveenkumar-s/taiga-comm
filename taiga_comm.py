@@ -9,9 +9,10 @@ class TaigaCommunicator:
     Userdata=None
     AuthorizationHeader=None
     config=None
-    def __init__(self):
+    def __init__(self,ApplicationToken=None):
         self.config=json.load(open(os.getcwd()+'/TaigaConfig.json'))
-        
+        if(ApplicationToken != None):
+            self.self.AuthorizationHeader={"Authorization":"Application "+ApplicationToken}
 
     #!CreateIssue - Used for creating an Issue in Taiga.
     #!Example CreateIssue(projectid=92046, type="Bug" ,subject="subject", description=desc , priority = "Normal", severity="Normal" , status="Level 1" , tags=["Bot","bugbin"])
@@ -71,6 +72,8 @@ class TaigaCommunicator:
             return "OK"
         else:
             return "ERROR: "+str(json.loads(response.content)["_error_message"])
+
+
 
 
 
@@ -160,3 +163,16 @@ class TaigaCommunicator:
             for items in content:
                 if items["name"]==issueType:
                     return items["id"]
+
+    #! Return the issue status id based on issue names
+    def open_issue(self,product_name):
+        statuses= self.config["issue_status_names"]
+        for items in statuses:
+            if items["product_name"]==product_name:
+                return self.getIssueStatusid(projectId=items["project_id"],items["issue_open_status_name"])
+                
+    def close_issue(self,product_name):
+        statuses= self.config["issue_status_names"]
+        for items in statuses:
+            if items["product_name"]==product_name:
+                return self.getIssueStatusid(projectId=items["project_id"],items["issue_close_status_name"])
