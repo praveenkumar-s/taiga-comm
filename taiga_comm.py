@@ -120,7 +120,7 @@ class TaigaCommunicator:
     #! Returns a simplified version of the projects
     #! Eg. [{u'Justickets': 144110}, {u'Moviebuff': 92046}, {u'Moviepass and QubeID': 29888}, {u'Slydes': 167933}]
     def getAssociatedProjectssimplified(self):
-        x=json.loads(self.getAssociatedProjects())
+        x=self.getAssociatedProjects()['content']
         if(x==None):
             return None
         arr=[]
@@ -169,10 +169,10 @@ class TaigaCommunicator:
         statuses= self.config["issue_status_names"]
         for items in statuses:
             if items["product_name"]==product_name:
-                return self.getIssueStatusid(projectId=items["project_id"],items["issue_open_status_name"])
+                return self.getIssueStatusid(projectId=items["project_id"],status= items["issue_open_status_name"])
                 
     def close_issue(self,product_name):
         statuses= self.config["issue_status_names"]
         for items in statuses:
             if items["product_name"]==product_name:
-                return self.getIssueStatusid(projectId=items["project_id"],items["issue_close_status_name"])
+                return self.getIssueStatusid(projectId=items["project_id"],status=items["issue_close_status_name"])
