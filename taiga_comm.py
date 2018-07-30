@@ -9,10 +9,12 @@ class TaigaCommunicator:
     Userdata=None
     AuthorizationHeader=None
     config=None
-    def __init__(self,ApplicationToken=None):
+    def __init__(self,ApplicationToken=None, project_id=None):
         self.config=json.load(open(os.getcwd()+'/TaigaConfig.json'))
         if(ApplicationToken != None):
             self.self.AuthorizationHeader={"Authorization":"Application "+ApplicationToken}
+        if(project_id!= None):
+            self.project_id=project_id
 
     #!CreateIssue - Used for creating an Issue in Taiga.
     #!Example CreateIssue(projectid=92046, type="Bug" ,subject="subject", description=desc , priority = "Normal", severity="Normal" , status="Level 1" , tags=["Bot","bugbin"])
