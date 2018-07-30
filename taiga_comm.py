@@ -12,7 +12,7 @@ class TaigaCommunicator:
     def __init__(self,ApplicationToken=None, project_id=None):
         self.config=json.load(open(os.getcwd()+'/TaigaConfig.json'))
         if(ApplicationToken != None):
-            self.self.AuthorizationHeader={"Authorization":"Application "+ApplicationToken}
+            self.AuthorizationHeader={"Authorization":"Application "+ApplicationToken}
         if(project_id!= None):
             self.project_id=project_id
 
